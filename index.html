@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>نظام الطلاب</title>
+    <style>
+        body {
+            direction: rtl;
+            font-family: 'Cairo', sans-serif;
+            background-color: #f0f8ff;
+            padding: 20px;
+        }
+        input, textarea, button {
+            margin: 5px 0;
+            padding: 10px;
+            width: 100%;
+        }
+        .box {
+            max-width: 400px;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        h2 {
+            text-align: center;
+        }
+        #results {
+            margin-top: 15px;
+            background: #eef;
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>نظام إدارة الطلاب</h2>
+    <input type="text" id="name" placeholder="اسم الطالب">
+    <input type="number" id="age" placeholder="العمر">
+    <input type="number" id="grade" placeholder="النتيجة">
+    <textarea id="info" placeholder="معلومات شخصية"></textarea>
+    <button onclick="addStudent()">➕ أضف الطالب</button>
+    <hr>
+    <input type="text" id="searchName" placeholder="ابحث باسم الطالب">
+    <button onclick="searchStudent()">🔍 بحث</button>
+    <div id="results"></div>
+</div>
+
+<script>
+    const students = [];
+
+    function addStudent() {
+        const name = document.getElementById('name').value;
+        const age = document.getElementById('age').value;
+        const grade = document.getElementById('grade').value;
+        const info = document.getElementById('info').value;
+
+        if (!name || !age || !grade) {
+            alert("الرجاء إدخال كل البيانات");
+            return;
+        }
+
+        students.push({ name, age, grade, info });
+
+        document.getElementById('results').innerHTML = "✅ تم إضافة الطالب: " + name;
+
+        // مسح الحقول
+        document.getElementById('name').value = "";
+        document.getElementById('age').value = "";
+        document.getElementById('grade').value = "";
+        document.getElementById('info').value = "";
+    }
+
+    function searchStudent() {
+        const searchName = document.getElementById('searchName').value;
+        const student = students.find(s => s.name === searchName);
+
+        if (student) {
+            document.getElementById('results').innerHTML = `
+                📋 <strong>معلومات الطالب:</strong><br>
+                الاسم: ${student.name}<br>
+                العمر: ${student.age}<br>
+                النتيجة: ${student.grade}<br>
+                معلومات شخصية: ${student.info}
+            `;
+        } else {
+            document.getElementById('results').innerHTML = "❌ الطالب غير موجود.";
+        }
+    }
+</script>
+
+</body>
+</html>
